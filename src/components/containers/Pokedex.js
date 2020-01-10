@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 // Custom components
-import DexList from './DexList';
 import SearchPokemon from './SearchPokemon';
 import UIPokedex from './../ui/UIPokedex';
 import UIDexItem from './../ui/UIDexItem';
@@ -16,15 +15,19 @@ export default class Pokedex extends Component {
   }
 
   componentDidMount() {
-    fetch(`/api/pokedex`)
-    .then(res => res.json())
-    .then(pokemon => this.setState({pokemon}));
+    this.searchPokemon();
   }
 
   searchPokemon = (name = '') => { // Queries the server
-    fetch(`/api/pokedex?name=${name}`)
-    .then(res => res.json())
-    .then(pokemon => this.setState({pokemon}));
+    if (process.env.NODE_ENV === 'development') { // Use proxy in development build
+      fetch(`/api/pokedex?name=${name}`)
+      .then(res => res.json())
+      .then(pokemon => this.setState({pokemon}));
+    } else {
+      fetch(`https://pokedex-server.appspot.com/api/pokedex?name=${name}`)
+      .then(res => res.json())
+      .then(pokemon => this.setState({pokemon}));
+    }
   };
 
   render() {
@@ -38,5 +41,4 @@ export default class Pokedex extends Component {
       </div>
     );
   }
-  //<UIDexItem pokemon={this.state.pokemon} />
 }
