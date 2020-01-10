@@ -5,7 +5,7 @@ const UINavbar = () => {
   return (
     <nav className="nav-wrapper red darken-3">
       <div className="container">
-        <a href="" className="brand-logo">Pokedex</a>
+        <h4 className="brand-logo">Pokedex App</h4>
         <ul className="right">
           <li><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/pokedex">Pokedex</NavLink></li>
